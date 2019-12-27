@@ -12,7 +12,6 @@ install:
 
 prepare: install
 	docker buildx create --use
-	docker context ls || true
 	docker buildx inspect --bootstrap
 
 prepare-old: install
@@ -20,7 +19,7 @@ prepare-old: install
 	docker buildx create old-style --use
 
 build-push:
-	docker buildx build --push \
+	docker buildx build --compress --no-cache --rm --force-rm --push \
 		--build-arg CI_NAME=${CI_NAME} \
 		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%S%Z"` \
 		--build-arg VCS_REF=`git rev-parse --short HEAD` \
