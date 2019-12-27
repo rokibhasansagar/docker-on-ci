@@ -1,6 +1,6 @@
 BUILDX_VER=v0.3.0
 CI_NAME?=local
-IMAGE_NAME=jdrouet/docker-on-ci
+IMAGE_NAME=$DOCKER_USERNAME/udemy-dl
 VERSION?=latest
 
 install:
@@ -18,5 +18,9 @@ prepare-old: install
 build-push:
 	docker buildx build --push \
 		--build-arg CI_NAME=${CI_NAME} \
+		--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%S%Z"` \
+		--build-arg VCS_REF=`git rev-parse --short HEAD` \
+		--build-arg VCS_URL=`git remote get-url origin` \
+		--build-arg VERSION='1.0' \
 		--platform linux/arm/v7,linux/arm64/v8,linux/386,linux/amd64 \
 		-t ${IMAGE_NAME}:${VERSION}-${CI_NAME} .
