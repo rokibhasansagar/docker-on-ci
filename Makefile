@@ -1,6 +1,6 @@
 BUILDX_VER=v0.3.0
 CI_NAME?=local
-IMAGE_NAME=$DOCKER_USERNAME/udemy-dl
+IMAGE_NAME=${DOCKER_USERNAME}/udemy-dl
 VERSION?=latest
 
 install:
